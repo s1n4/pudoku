@@ -8,6 +8,7 @@
 from flask import Flask, render_template, request, url_for
 from optparse import OptionParser
 from lib import sudoku
+import os
 
 app = Flask(__name__)
 
@@ -82,11 +83,11 @@ def result():
 
 
 def main():
-    parser = OptionParser(description='Pudoku is a web interface sudoku', 
+    parser = OptionParser(description='Pudoku is a web interface sudoku',
                           version='Pudoku 1.1.3')
-    parser.add_option('--host', type='str', default='localhost', 
+    parser.add_option('--host', type='str', default='0.0.0.0',
                       help='\tHost to bind')
-    parser.add_option('--port', type='int', default=5000,
+    parser.add_option('--port', type='int', default=int(os.environ.get('PORT', 5000)),
                       help='\tPort to bind')
 
     help_context = {'--version': '\tDisplay current version',
@@ -102,7 +103,7 @@ def main():
     host = opt.host
     port = opt.port
     app.run(host=host, port=port)
-    
+
 
 if __name__ == '__main__':
     main()
